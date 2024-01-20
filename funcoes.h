@@ -1,6 +1,9 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 #include "estruturas.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 struct NOLDLU* criarNoUser(struct DadosUser dadosUser) {
@@ -74,6 +77,11 @@ void CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
         temp->next = novoNo;
         novoNo->prev = temp;
     }
+    if(cadastrarUsuarioEGravarArquivo(dadosUser)){
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
 
@@ -105,4 +113,15 @@ void cadastrarCarteira(struct CarteiraDigital* carteira, double saldo, const cha
     }
 }
 
-#endif // FUNCOES_H_INCLUDED
+void cadastrarUsuarioEGravarArquivo(struct DadosUser dadosUser) {
+    FILE *arquivoUsuario = fopen("usuarios.txt", "a");
+
+    if (arquivoUsuario != NULL) {
+        fprintf(arquivoUsuario, "%s,%d,%d,%s,%d,%d,%s,%s\n",dadosUser->nome, dadosUser->numeroEstudante, dadosUser->sala,dadosUser->curso, dadosUser->idade, dadosUser->ano,dadosUser->senha, dadosUser->numeroTelefone);
+        fclose(arquivoUsuario);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+#endif

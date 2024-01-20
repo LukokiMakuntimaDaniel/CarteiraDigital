@@ -10,9 +10,13 @@ int opcao=0;
 int main()
 {
     printf("----------------------------------------------------\n");
-    printf("1- SISTEMA");
-    printf("2- CARTEIRA DIGITAL");
-    printf("3- SAIR");
+    printf("1- SISTEMA \n");
+    printf("2- CARTEIRA DIGITAL \n");
+    printf("3- SAIR \n");
+    printf("----------------------------------------------------\n");
+
+
+
 
     printf("Hello world!\n");
     return 0;
