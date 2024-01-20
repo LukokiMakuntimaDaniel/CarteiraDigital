@@ -31,6 +31,11 @@ struct DadosCarteira{
     int numeroEstudante;
 };
 
+struct dadosConta{
+    char codigoCarteira[50];
+    char tipoDeConta[50];
+};
+
 struct CarteiraDigital {
     struct DadosCarteira dadosCarteira[MAX_CARTEIRA];
     int qtd;
@@ -45,6 +50,14 @@ struct dadosHistoricoTrasacao{
     int saldo;
     char codigoCarteira[50];
 };
+
+
+struct NOLDLC {
+    struct dadosConta dados;
+    struct NOLDL* prev;
+    struct NOLDL* next;
+};
+
 
 struct NOLDLHT {
     struct dadosHistoricoTrasacao dadosHT;

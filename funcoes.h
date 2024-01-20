@@ -15,6 +15,7 @@ struct NOLDLU* criarNoUser(struct DadosUser dadosUser) {
     return novoNo;
 }
 
+
 struct NOLDLHT* criarNoHT(struct dadosHistoricoTrasacao dadosTrasacao) {
 
     struct NOLDLHT* novoNo = (struct NOLDLHT*)malloc(sizeof(struct NOLDLHT));
@@ -27,6 +28,38 @@ struct NOLDLHT* criarNoHT(struct dadosHistoricoTrasacao dadosTrasacao) {
     novoNo->next = NULL;
     return novoNo;
 }
+
+
+struct NOLDLC* criarNOC(struct dadosConta dados) {
+
+    struct NOLDLC* novoNo = (struct NOLDLC*)malloc(sizeof(struct NOLDLC));
+    if (novoNo == NULL) {
+        return 0;
+    }
+
+    novoNo->dados = dados;
+    novoNo->prev = NULL;
+    novoNo->next = NULL;
+    return novoNo;
+}
+
+
+void cadastratConta(struct NOLDLC** cabeca, struct dadosConta dados) {
+    struct NOLDLC* novoNo = criarNOC(dados);
+
+    if (*cabeca == NULL) {
+        *cabeca = novoNo;
+    } else {
+        struct NOLDLC* temp = *cabeca;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = novoNo;
+        novoNo->prev = temp;
+    }
+}
+
+
 
 void CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
     struct NOLDLU* novoNo = criarNoUser(dadosUser);
@@ -43,7 +76,8 @@ void CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
     }
 }
 
-void cadastrarCarteira(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados) {
+
+void cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados) {
     struct NOLDLHT* novoNo = criarNoHT(dados);
 
     if (*cabeca == NULL) {
