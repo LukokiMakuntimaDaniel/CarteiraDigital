@@ -44,7 +44,6 @@ struct dadosHistoricoTrasacao{
     int ano;
     int dia;
     int mes;
-    int ano;
     int tipoTrazacao;
     int saldo;
     char codigoCarteira[50];

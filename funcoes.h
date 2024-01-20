@@ -173,4 +173,26 @@ int cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransaca
         return 0;
     }
 }
+
+char* login(struct NOLDLU* lista,numero,senha){
+    while (lista != NULL) {
+            if (lista->dadosUser.numeroEstudante == numeroEstudante && strcmp(lista->dadosUser.senha, senha) == 0) {
+                return lista->dadosUser.numeroTelefone;
+            }
+            lista = lista->next;
+        }
+        return NULL;
+}
+
+char* pegarMeuNome(struct NOLDLU* head, const char* numeroTelefone) {
+    struct NOLDLU* current = head;
+    while (current != NULL) {
+        if (strcmp(current->dadosUser.numeroTelefone, numeroTelefone) == 0) {
+            return current->dadosUser.nome;
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
 #endif
