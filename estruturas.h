@@ -15,7 +15,6 @@ struct DadosUser {
 
 
 
-
 struct NOLDLU {
     struct DadosUser dadosUser;
     struct NOLDL* prev;
@@ -64,5 +63,7 @@ struct NOLDLHT {
     struct NOLDL* prev;
     struct NOLDL* next;
 };
+
+
 
 #endif // FUNCOES_H_INCLUDED

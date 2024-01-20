@@ -90,7 +90,7 @@ int CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
 }
 
 
-void cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados) {
+int cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados) {
     struct NOLDLHT* novoNo = criarNoHT(dados);
 
     if (*cabeca == NULL) {
@@ -102,6 +102,12 @@ void cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao da
         }
         temp->next = novoNo;
         novoNo->prev = temp;
+    }
+
+    if(cadastrarTransacaoEGravarArquivo(dados)){
+            return 1;
+    }else{
+        return 0;
     }
 }
 
@@ -157,4 +163,14 @@ int cadastrarContaEGravarArquivo(struct dadosConta dadosConta) {
     }
 }
 
+void cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransacao) {
+    FILE *arquivoTransacao = fopen("transacoes.txt", "a");
+    if (arquivoTransacao != NULL) {
+        fprintf(arquivoTransacao, "%d,%d,%d,%d,%d,%d,%s\n",dadosTransacao->ano, dadosTransacao->dia, dadosTransacao->mes,dadosTransacao->anoDestino, dadosTransacao->tipoTrazacao,dadosTransacao->saldo, dadosTransacao->codigoCarteira);
+        fclose(arquivoTransacao);
+        return 1;
+    } else {
+        return 0;
+    }
+}
 #endif
