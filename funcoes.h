@@ -163,7 +163,7 @@ int cadastrarContaEGravarArquivo(struct dadosConta dadosConta) {
     }
 }
 
-void cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransacao) {
+int cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransacao) {
     FILE *arquivoTransacao = fopen("transacoes.txt", "a");
     if (arquivoTransacao != NULL) {
         fprintf(arquivoTransacao, "%d,%d,%d,%d,%d,%d,%s\n",dadosTransacao->ano, dadosTransacao->dia, dadosTransacao->mes,dadosTransacao->anoDestino, dadosTransacao->tipoTrazacao,dadosTransacao->saldo, dadosTransacao->codigoCarteira);
