@@ -5,7 +5,7 @@
 #include "estruturas.h"
 
 struct NOLDLU *utilizadores = NULL;
-int opcao,opcao1,opcao2,numero,opcao3,opcao4;
+int opcao,opcao1,opcao2,numero,opcao3;
 char *numeroTelefone,senha[50];
 struct DadosUser novoUsuario;
 
@@ -42,42 +42,9 @@ int main()
                             scanf("%s",&senha);
                             printf("processando.....");
                             if(numero==2024 && strcmp(senha,"UAN")==0){
-                                do{
-                                    printf("BEM VINDO GESTOR");
-                                    printf("----------------------------------------------------\n");
-                                    printf("1: Depositar saldo\n");
-                                    printf("2: Levantar Saldo\n");
-                                    printf("3: Consultar a Quantidade de Contas");
-                                    printf("4: Criar Conta");
-                                    printf("5: Visualizar Utilizadores");
-                                    printf("6: Visualizar Todas as Carteiras");
-                                    printf("0- SAIR \n");
-                                    printf("----------------------------------------------------\n");
-                                    printf("escolha uma opção: \n");
-                                    scanf("%d",&opcao4);
-                                    system("cls");
-                                    switch (opcao4){
-                                        case 1:
-                                            break;
-                                        case 2:
-                                            break;
-                                        case 3:
-                                            break;
-                                        case 4:
-                                            break;
-
-                                         case 5:
-                                            break;
-                                         case 6:
-                                            break;
-
-                                         case 1:
-                                            break;
-                                         case 1:
-                                            break;
-                                    }
-
-                                }while(opcao4!=0);
+                                printf("1: Depositar saldo\n");
+                                printf("2: Levantar Saldo\n");
+                                printf("3: Consultar a Quantidade de Carteira");
                             }else{
                                 printf("senha Incorreta");
                             }
@@ -100,9 +67,9 @@ int main()
                                     printf("3: Levantamento do Saldo \n");
                                     printf("4: Efectuar o Pagamento \n");
                                     printf("5: Visualizar o Historico \n");
+                                    printf("escolha uma opção: \n");
                                     printf("0- SAIR \n");
                                     printf("----------------------------------------------------\n");
-                                    printf("escolha uma opção: \n");
                                     scanf("%d",&opcao3);
                                     system("cls");
                                     switch (opcao3){
