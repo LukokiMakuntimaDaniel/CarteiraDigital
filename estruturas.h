@@ -41,12 +41,13 @@ struct dadosHistoricoTrasacao{
     int dia;
     int mes;
     int ano;
-
-
+    int tipoTrazacao;
+    int saldo;
+    char codigoCarteira[50];
 };
 
 struct NOLDLHT {
-    struct carteira dadosCarteira;
+    struct dadosHistoricoTrasacao dadosHT;
     struct NOLDL* prev;
     struct NOLDL* next;
 };

@@ -15,14 +15,14 @@ struct NOLDLU* criarNoUser(struct DadosUser dadosUser) {
     return novoNo;
 }
 
-struct NOLDLC* criarNoCarteira(struct carteira dadosCarteira) {
+struct NOLDLHT* criarNoHT(struct dadosHistoricoTrasacao dadosTrasacao) {
 
-    struct NOLDLC* novoNo = (struct NOLDLC*)malloc(sizeof(struct NOLDLC));
+    struct NOLDLHT* novoNo = (struct NOLDLHT*)malloc(sizeof(struct NOLDLHT));
     if (novoNo == NULL) {
         return 0;
     }
 
-    novoNo->dadosCarteira = dadosCarteira;
+    novoNo->dadosHT = dadosTrasacao;
     novoNo->prev = NULL;
     novoNo->next = NULL;
     return novoNo;
@@ -43,13 +43,13 @@ void CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
     }
 }
 
-void cadastrarCarteira(struct NOLDLC** cabeca, struct carteira dadosUser) {
-    struct NOLDLC* novoNo = criarNoCarteira(dadosUser);
+void cadastrarCarteira(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados) {
+    struct NOLDLHT* novoNo = criarNoHT(dados);
 
     if (*cabeca == NULL) {
         *cabeca = novoNo;
     } else {
-        struct NOLDLC* temp = *cabeca;
+        struct NOLDLHT* temp = *cabeca;
         while (temp->next != NULL) {
             temp = temp->next;
         }
@@ -58,7 +58,8 @@ void cadastrarCarteira(struct NOLDLC** cabeca, struct carteira dadosUser) {
     }
 }
 
-void adicionarDadosCarteira(struct CarteiraDigital* carteira, double saldo, const char* codigoCarteira, int numeroEstudante) {
+
+void cadastrarCarteira(struct CarteiraDigital* carteira, double saldo, const char* codigoCarteira, int numeroEstudante) {
     if (carteira->qtd < MAX_CARTEIRA) {
         carteira->dadosCarteira[carteira->qtd].saldo = saldo;
         snprintf(carteira->dadosCarteira[carteira->qtd].codigoCarteira, sizeof(carteira->dadosCarteira[carteira->qtd].codigoCarteira), "%s", codigoCarteira);
