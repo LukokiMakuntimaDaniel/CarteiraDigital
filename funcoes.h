@@ -1,12 +1,12 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
-#include "estruturas.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "estruturas.h"
 
 
-struct NOLDLU* criarNoUser(struct DadosUser dadosUser) {
+struct NOLDLU * criarNoUser(struct DadosUser dadosUser) {
     struct NOLDLU* novoNo = (struct NOLDLU*)malloc(sizeof(struct NOLDLU));
     if (novoNo == NULL) {
         return 0;
@@ -122,7 +122,7 @@ int cadastrarCarteira(struct CarteiraDigital* carteira, double saldo, const char
         return 0;
     }
 
-    if(cadastrarCarteiraEGravarArquivo(double saldo, const char* codigoCarteira, int numeroEstudante)){
+    if(cadastrarCarteiraEGravarArquivo(saldo, codigoCarteira,numeroEstudante)){
         return 1;
     }else{
         return 0;
@@ -133,11 +133,19 @@ int cadastrarUsuarioEGravarArquivo(struct DadosUser dadosUser) {
     FILE *arquivoUsuario = fopen("usuarios.txt", "a");
 
     if (arquivoUsuario != NULL) {
-        fprintf(arquivoUsuario, "%s,%d,%d,%s,%d,%d,%s,%s\n",dadosUser->nome, dadosUser->numeroEstudante, dadosUser->sala,dadosUser->curso, dadosUser->idade, dadosUser->ano,dadosUser->senha, dadosUser->numeroTelefone);
+        fprintf(arquivoUsuario, "%s,%d,%d,%s,%d,%d,%s,%s\n",dadosUser.nome, dadosUser.numeroEstudante, dadosUser.sala,dadosUser.curso, dadosUser.idade, dadosUser.ano,dadosUser.senha, dadosUser.numeroTelefone);
         fclose(arquivoUsuario);
         return 1;
     } else {
         return 0;
+    }
+}
+
+
+void removerNovaLinha(char *str) {
+    size_t comprimento = strcspn(str, "\n");
+    if (comprimento < strlen(str)) {
+        str[comprimento] = '\0';
     }
 }
 
@@ -155,7 +163,7 @@ int cadastrarCarteiraEGravarArquivo(double saldo, const char* codigoCarteira, in
 int cadastrarContaEGravarArquivo(struct dadosConta dadosConta) {
     FILE *arquivoConta = fopen("contas.txt", "a");
     if (arquivoConta != NULL) {
-        fprintf(arquivoConta, "%s,%s\n", dadosConta->codigoCarteira, dadosConta->tipoDeConta);
+        fprintf(arquivoConta, "%s,%s\n", dadosConta.codigoCarteira, dadosConta.tipoDeConta);
         fclose(arquivoConta);
         return 1;
     } else {
@@ -166,7 +174,7 @@ int cadastrarContaEGravarArquivo(struct dadosConta dadosConta) {
 int cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransacao) {
     FILE *arquivoTransacao = fopen("transacoes.txt", "a");
     if (arquivoTransacao != NULL) {
-        fprintf(arquivoTransacao, "%d,%d,%d,%d,%d,%d,%s\n",dadosTransacao->ano, dadosTransacao->dia, dadosTransacao->mes,dadosTransacao->anoDestino, dadosTransacao->tipoTrazacao,dadosTransacao->saldo, dadosTransacao->codigoCarteira);
+        fprintf(arquivoTransacao, "%d,%d,%d,%d,%d,%d,%s\n",dadosTransacao.ano, dadosTransacao.dia, dadosTransacao.mes,dadosTransacao.ano, dadosTransacao.tipoTrazacao,dadosTransacao.saldo, dadosTransacao.codigoCarteira);
         fclose(arquivoTransacao);
         return 1;
     } else {
@@ -174,9 +182,9 @@ int cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransaca
     }
 }
 
-char* login(struct NOLDLU* lista,numero,senha){
+char * login(struct NOLDLU * lista , int numero , char *senha){
     while (lista != NULL) {
-            if (lista->dadosUser.numeroEstudante == numeroEstudante && strcmp(lista->dadosUser.senha, senha) == 0) {
+            if (lista->dadosUser.numeroEstudante == numero && strcmp(lista->dadosUser.senha, senha) == 0) {
                 return lista->dadosUser.numeroTelefone;
             }
             lista = lista->next;
@@ -184,7 +192,7 @@ char* login(struct NOLDLU* lista,numero,senha){
         return NULL;
 }
 
-char* pegarMeuNome(struct NOLDLU* head, const char* numeroTelefone) {
+char* pegarMeuNome(struct NOLDLU* head, char* numeroTelefone) {
     struct NOLDLU* current = head;
     while (current != NULL) {
         if (strcmp(current->dadosUser.numeroTelefone, numeroTelefone) == 0) {
