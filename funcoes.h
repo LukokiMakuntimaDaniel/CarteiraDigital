@@ -47,7 +47,7 @@ struct NOLDLC* criarNOC(struct dadosConta dados) {
 }
 
 
-void cadastratConta(struct NOLDLC** cabeca, struct dadosConta dados) {
+int cadastratConta(struct NOLDLC** cabeca, struct dadosConta dados) {
     struct NOLDLC* novoNo = criarNOC(dados);
 
     if (*cabeca == NULL) {
@@ -59,6 +59,11 @@ void cadastratConta(struct NOLDLC** cabeca, struct dadosConta dados) {
         }
         temp->next = novoNo;
         novoNo->prev = temp;
+    }
+    if(cadastrarContaEGravarArquivo(dados)){
+        return 1;
+    }else{
+        return 0;
     }
 }
 
@@ -140,4 +145,16 @@ int cadastrarCarteiraEGravarArquivo(double saldo, const char* codigoCarteira, in
         return 0;
     }
 }
+
+int cadastrarContaEGravarArquivo(struct dadosConta dadosConta) {
+    FILE *arquivoConta = fopen("contas.txt", "a");
+    if (arquivoConta != NULL) {
+        fprintf(arquivoConta, "%s,%s\n", dadosConta->codigoCarteira, dadosConta->tipoDeConta);
+        fclose(arquivoConta);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 #endif
