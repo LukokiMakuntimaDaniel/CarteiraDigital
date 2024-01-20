@@ -112,17 +112,17 @@ int cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dad
 }
 
 
-int cadastrarCarteira(struct CarteiraDigital* carteira, double saldo, const char* codigoCarteira, int numeroEstudante) {
+int cadastrarCarteira(struct CarteiraDigital* carteira, struct DadosCarteira dados ) {
     if (carteira->qtd < MAX_CARTEIRA) {
-        carteira->dadosCarteira[carteira->qtd].saldo = saldo;
-        snprintf(carteira->dadosCarteira[carteira->qtd].codigoCarteira, sizeof(carteira->dadosCarteira[carteira->qtd].codigoCarteira), "%s", codigoCarteira);
-        carteira->dadosCarteira[carteira->qtd].numeroEstudante = numeroEstudante;
+        carteira->dadosCarteira[carteira->qtd].saldo = dados.saldo;
+        snprintf(carteira->dadosCarteira[carteira->qtd].codigoCarteira, sizeof(carteira->dadosCarteira[carteira->qtd].codigoCarteira), "%s", dados.codigoCarteira);
+        carteira->dadosCarteira[carteira->qtd].numeroEstudante = dados.numeroEstudante;
         carteira->qtd++;
     } else {
         return 0;
     }
 
-    if(cadastrarCarteiraEGravarArquivo(saldo, codigoCarteira,numeroEstudante)){
+    if(cadastrarCarteiraEGravarArquivo(dados.saldo, dados.codigoCarteira,dados.numeroEstudante)){
         return 1;
     }else{
         return 0;

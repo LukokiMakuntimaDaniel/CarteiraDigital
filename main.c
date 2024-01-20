@@ -5,9 +5,17 @@
 #include "estruturas.h"
 
 struct NOLDLU *utilizadores = NULL;
+struct NOLDLC * contas = NULL;
+struct CarteiraDigital carteiras;
+
+
+
 int opcao,opcao1,opcao2,numero,opcao3,opcao4;
-char *numeroTelefone,senha[50];
+char *numeroTelefone,senha[50],telefone[50],codigoCarteira[50]="LW";
+double saldo=10000;
 struct DadosUser novoUsuario;
+struct dadosConta novaConta;
+struct DadosCarteira novaCarteira;
 
 int main()
 {
@@ -20,22 +28,20 @@ int main()
         printf("escolha uma opção: \n");
         scanf("%d",&opcao);
         system("cls");
-
         switch (opcao){
             case 1:
                 do{
                     printf("----------------------------------------------------\n");
-                    printf("1: Entrar como Utilizador\n");
-                    printf("2: Entrar como Gestor\n");
-                    printf("3: Cadastrar Usuario\n");
+                    printf("1: LOGAR NO LombongoPay COMO GESTOR\n");
+                    printf("2: CADASTRAR O UTILIZADOR DA CARTEIRA DIGITAL ESTUDANTE\n");
                     printf("0- SAIR \n");
                     printf("----------------------------------------------------\n");
                     printf("escolha uma opção: \n");
                     scanf("%d",&opcao1);
                     system("cls");
                     switch (opcao1){
-                        case 2:
-                            printf("Digite O Numero de Estudante");
+                        case 1:
+                            printf("Digite O Numero DE ACESSO: ");
                             scanf("%d",&numero);
                             getchar();
                             printf("Digite a senha");
@@ -43,14 +49,14 @@ int main()
                             printf("processando.....");
                             if(numero==2024 && strcmp(senha,"UAN")==0){
                                 do{
-                                    printf("BEM VINDO GESTOR");
+                                    printf("\nBEM VINDO GESTOR\n");
                                     printf("----------------------------------------------------\n");
                                     printf("1: Depositar saldo\n");
                                     printf("2: Levantar Saldo\n");
-                                    printf("3: Consultar a Quantidade de Contas");
-                                    printf("4: Criar Conta");
-                                    printf("5: Visualizar Utilizadores");
-                                    printf("6: Visualizar Todas as Carteiras");
+                                    printf("3: Consultar a Quantidade de Contas\n");
+                                    printf("4: Criar Conta\n");
+                                    printf("5: Visualizar Utilizadores\n");
+                                    printf("6: Visualizar Todas as Carteiras\n");
                                     printf("0- SAIR \n");
                                     printf("----------------------------------------------------\n");
                                     printf("escolha uma opção: \n");
@@ -64,16 +70,34 @@ int main()
                                         case 3:
                                             break;
                                         case 4:
-                                            break;
+                                            getchar();
+                                            printf("CRIAÇÃO DE CONTA\n");
+                                            printf("Digite o numero de telefone do Estudante\n");
+                                            fgets(telefone, sizeof(telefone), stdin);
+                                            removerNovaLinha(telefone);
+                                            printf("Digite o numero do Estudante\n");
+                                            scanf("%d",&numero);
+                                            strcat(codigoCarteira,telefone);
+                                            strcpy(novaCarteira.codigoCarteira,codigoCarteira);
+                                            novaCarteira.saldo=saldo;
+                                            novaCarteira.numeroEstudante=numero;
+                                            strcpy(novaConta.codigoCarteira,codigoCarteira);
+                                            strcpy(novaConta.tipoDeConta,"Poupanca");
+                                            if(cadastrarCarteira(&carteiras,novaCarteira) && cadastratConta(&contas,novaConta)){
+                                                printf("\nCarteira e conta criada\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                            }else{
+                                                printf("\nLimite da carteira estourou\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                            }
 
+
+                                            break;
                                          case 5:
                                             break;
                                          case 6:
-                                            break;
-
-                                         case 1:
-                                            break;
-                                         case 1:
                                             break;
                                     }
 
@@ -82,53 +106,7 @@ int main()
                                 printf("senha Incorreta");
                             }
                             break;
-                        case 1:
-                            printf("Digite O Numero de Estudante");
-                            scanf("%d",&numero);
-                            getchar();
-                            printf("Digite a senha");
-                            scanf("%s",&senha);
-                            printf("processando.....");
-                            numeroTelefone = login(&utilizadores,numero,senha);
-                            if(numeroTelefone){
-                                    system("cls");
-                                do{
-                                    printf("Usuario: %s ",(pegarMeuNome(&utilizadores,numeroTelefone)));
-                                    printf("----------------------------------------------------\n");
-                                    printf("1: Efectuar a Transferencia\n");
-                                    printf("2: Consultar o Saldo \n");
-                                    printf("3: Levantamento do Saldo \n");
-                                    printf("4: Efectuar o Pagamento \n");
-                                    printf("5: Visualizar o Historico \n");
-                                    printf("0- SAIR \n");
-                                    printf("----------------------------------------------------\n");
-                                    printf("escolha uma opção: \n");
-                                    scanf("%d",&opcao3);
-                                    system("cls");
-                                    switch (opcao3){
-                                        case 1:
-                                            break;
-
-                                        case 2:
-                                            break;
-
-                                        case 3:
-                                            break;
-
-                                        case 4:
-                                            break;
-
-                                        case 5:
-                                            break;
-                                    }
-                                }while(opcao3!=0);
-                            }else{
-                                system("cls");
-                                printf("senha incorreta");
-
-                            }
-                            break;
-                        case 3:
+                        case 2:
                             getchar();
                             printf("Cadastrando Usuario\n");
                             printf("\nDigite o nome do Usuario: \n");
@@ -154,11 +132,15 @@ int main()
                             fgets(novoUsuario.numeroTelefone, sizeof(novoUsuario.numeroTelefone), stdin);
                             removerNovaLinha(novoUsuario.numeroTelefone);
                             if(CadastrarUtilizador(&utilizadores,novoUsuario)){
-                                    printf("\ncadastrado com sucesso\n");
+                                printf("\ncadastrado com sucesso\n");
+                                printf("\nPressione Enter para continuar...\n");
+                                getchar();
                             }else{
-
+                                printf("\nCadastre de Novo\n");
+                                 printf("\nPressione Enter para continuar...\n");
+                                 getchar();
+                                system("cls");
                             }
-
                             break;
                     }
                 }while(opcao1!=0);
@@ -168,25 +150,51 @@ int main()
                 break;
            case 2:
                 //Login
-                do{
-                    printf("----------------------------------------------------\n");
-                    printf("1: Entrar como Utilizador\n");
-                    printf("2: Entrar como Gestor\n");
-                    printf("escolha uma opção: \n");
-                    printf("0- SAIR \n");
-                    printf("----------------------------------------------------\n");
-                    scanf("%d",opcao2);
+                printf("FAÇA O LOGIN NO LombongoPay COMO ESTUDANTE\n ");
+                printf("Digite O Numero de Estudante");
+                scanf("%d",&numero);
+                getchar();
+                printf("Digite a senha");
+                scanf("%s",&senha);
+                printf("processando.....");
+                numeroTelefone = login(&utilizadores,numero,senha);
+                if(numeroTelefone){
+                        system("cls");
+                    do{
+                        printf("Usuario: %s ",(pegarMeuNome(&utilizadores,numeroTelefone)));
+                        printf("----------------------------------------------------\n");
+                        printf("1: Efectuar a Transferencia\n");
+                        printf("2: Consultar o Saldo \n");
+                        printf("3: Levantamento do Saldo \n");
+                        printf("4: Efectuar o Pagamento \n");
+                        printf("5: Visualizar o Historico \n");
+                        printf("0- SAIR \n");
+                        printf("----------------------------------------------------\n");
+                        printf("escolha uma opção: \n");
+                        scanf("%d",&opcao3);
+                        system("cls");
+                        switch (opcao3){
+                            case 1:
+                                break;
+
+                            case 2:
+                                break;
+
+                            case 3:
+                                break;
+
+                            case 4:
+                                break;
+
+                            case 5:
+                                break;
+                        }
+                    }while(opcao3!=0);
+                }else{
                     system("cls");
-                    switch (opcao2){
-                        case 1:
+                    printf("senha incorreta");
 
-
-                            break;
-
-                        case 2:
-                            break;
-                    }
-                }while(opcao1!=0);
+                }
                 break;
         }
     }while(opcao!=0);
