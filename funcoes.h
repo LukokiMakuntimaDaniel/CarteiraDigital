@@ -203,4 +203,28 @@ char* pegarMeuNome(struct NOLDLU* head, char* numeroTelefone) {
     return NULL;
 }
 
+
+int depositar(struct CarteiraDigital *carteira, int numeroEstudante, double saldoAdicional) {
+    int i;
+    for (i = 0; i < carteira->qtd; i++) {
+        if (carteira->dadosCarteira[i].numeroEstudante == numeroEstudante) {
+            carteira->dadosCarteira[i].saldo += saldoAdicional;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int levantamneto(struct CarteiraDigital *carteira, int numeroEstudante, double saldoAdicional) {
+    int i;
+    for (i = 0; i < carteira->qtd; i++) {
+        if (carteira->dadosCarteira[i].numeroEstudante == numeroEstudante) {
+            carteira->dadosCarteira[i].saldo -= saldoAdicional;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
 #endif

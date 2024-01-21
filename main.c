@@ -64,13 +64,43 @@ int main()
                                     system("cls");
                                     switch (opcao4){
                                         case 1:
+                                            printf("\nDigite o numero do estudante\n");
+                                            scanf("%d",&numero);
+                                            printf("Digite o numero do estudante\n");
+                                            scanf("%lf",&saldo);
+                                            if(depositar(&carteiras,numero,saldo)){
+                                                printf("O valor vou depositado com sucesso\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                            }else{
+                                                printf("houve algum erro ou estudante não encontrado\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                            }
                                             break;
                                         case 2:
+                                            printf("\nDigite o numero do estudante\n");
+                                            scanf("%d",&numero);
+                                            printf("Digite o numero do estudante\n");
+                                            scanf("%lf",&saldo);
+                                            if(depositar(&carteiras,numero,saldo)){
+                                                printf("Operacao de levantamento feito com sucesso\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                            }else{
+                                                printf("houve algum erro ou estudante não encontrado\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                            }
+                                            break;
+
+
                                             break;
                                         case 3:
                                             break;
                                         case 4:
                                             getchar();
+                                            saldo=10000;
                                             printf("CRIAÇÃO DE CONTA\n");
                                             printf("Digite o numero de telefone do Estudante\n");
                                             fgets(telefone, sizeof(telefone), stdin);
@@ -193,7 +223,6 @@ int main()
                 }else{
                     system("cls");
                     printf("senha incorreta");
-
                 }
                 break;
         }

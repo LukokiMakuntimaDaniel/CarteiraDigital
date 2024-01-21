@@ -18,11 +18,13 @@ struct NOLDLU {
     struct NOLDL* prev;
     struct NOLDL* next;
 };
+
 struct DadosCarteira{
     double saldo;
     char codigoCarteira[50];
     int numeroEstudante;
 };
+
 
 struct dadosConta{
     char codigoCarteira[50];
