@@ -71,4 +71,5 @@ int cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransaca
 char * login(struct NOLDLU * lista , int numero, char* senha);
 char* pegarMeuNome(struct NOLDLU* head, char* numeroTelefone);
 void removerNovaLinha(char *str);
+int contarDadosDeConta(struct NOLDLC* inicio);
 #endif // ESTRUTURAS_H_INCLUDED

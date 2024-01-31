@@ -12,6 +12,7 @@ struct CarteiraDigital carteiras;
 
 int opcao,opcao1,opcao2,numero,opcao3,opcao4;
 char *numeroTelefone,senha[50],telefone[50],codigoCarteira[50]="LW";
+
 double saldo=10000;
 struct DadosUser novoUsuario;
 struct dadosConta novaConta;
@@ -68,7 +69,7 @@ int main()
                                             scanf("%d",&numero);
                                             printf("Digite o numero do estudante\n");
                                             scanf("%lf",&saldo);
-                                            if(depositar(&carteiras,numero,saldo)){
+                                            if(levantamneto(&carteiras,numero,saldo)){
                                                 printf("O valor vou depositado com sucesso\n");
                                                 printf("\nPressione Enter para continuar...\n");
                                                 getchar();
@@ -93,10 +94,13 @@ int main()
                                                 getchar();
                                             }
                                             break;
-
-
-                                            break;
                                         case 3:
+                                            printf("Quantidade de Contas");
+                                            printf("-------------------------------------------------------------");
+                                            printf("Na Nossa base de dados existe %d "+contarDadosDeConta(&contas));
+                                            printf("-------------------------------------------------------------");
+                                            printf("\nPressione Enter para continuar...\n");
+                                            getchar();
                                             break;
                                         case 4:
                                             getchar();

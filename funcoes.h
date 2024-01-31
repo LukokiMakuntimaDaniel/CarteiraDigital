@@ -226,5 +226,15 @@ int levantamneto(struct CarteiraDigital *carteira, int numeroEstudante, double s
     return 0;
 }
 
+int contarDadosDeConta(struct NOLDLC* inicio) {
+    int contador = 0;
+    struct NOLDLC* atual = inicio;
+
+    while (atual != NULL) {
+        contador++;
+        atual = atual->next;
+    }
+    return contador;
+}
 
 #endif
