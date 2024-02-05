@@ -47,19 +47,19 @@ struct NOLDLC* criarNOC(struct dadosConta dados) {
 }
 
 
-int cadastratConta(struct NOLDLC** cabeca, struct dadosConta dados) {
+int cadastratConta(struct NOLDLC* cabeca, struct dadosConta dados) {
     struct NOLDLC* novoNo = criarNOC(dados);
-
-    if (*cabeca == NULL) {
-        *cabeca = novoNo;
+    if (cabeca == NULL) {
+        cabeca = novoNo;
     } else {
-        struct NOLDLC* temp = *cabeca;
+        struct NOLDLC* temp = cabeca;
         while (temp->next != NULL) {
             temp = temp->next;
         }
         temp->next = novoNo;
         novoNo->prev = temp;
     }
+
     if(cadastrarContaEGravarArquivo(dados)){
         return 1;
     }else{
@@ -69,13 +69,14 @@ int cadastratConta(struct NOLDLC** cabeca, struct dadosConta dados) {
 
 
 
-int CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
+int CadastrarUtilizador(struct NOLDLU* cabeca, struct DadosUser dadosUser) {
     struct NOLDLU* novoNo = criarNoUser(dadosUser);
 
-    if (*cabeca == NULL) {
-        *cabeca = novoNo;
+
+    if (cabeca == NULL) {
+        cabeca = novoNo;
     } else {
-        struct NOLDLU* temp = *cabeca;
+        struct NOLDLU* temp = cabeca;
         while (temp->next != NULL) {
             temp = temp->next;
         }
@@ -90,13 +91,13 @@ int CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser) {
 }
 
 
-int cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados) {
+int cadastrarTrasacao(struct NOLDLHT* cabeca, struct dadosHistoricoTrasacao dados) {
     struct NOLDLHT* novoNo = criarNoHT(dados);
 
-    if (*cabeca == NULL) {
-        *cabeca = novoNo;
+    if (cabeca == NULL) {
+        cabeca = novoNo;
     } else {
-        struct NOLDLHT* temp = *cabeca;
+        struct NOLDLHT* temp = cabeca;
         while (temp->next != NULL) {
             temp = temp->next;
         }
@@ -227,7 +228,7 @@ int levantamneto(struct CarteiraDigital *carteira, int numeroEstudante, double s
 }
 
 int contarDadosDeConta(struct NOLDLC* inicio) {
-    int contador = 0;
+    int contador = -1;
     struct NOLDLC* atual = inicio;
 
     while (atual != NULL) {
@@ -237,4 +238,37 @@ int contarDadosDeConta(struct NOLDLC* inicio) {
     return contador;
 }
 
+
+int listarDadosPorNumeroEstudante(struct NOLDLU* inicio, int numeroEstudante) {
+    struct NOLDLU* atual = inicio;
+
+    while (atual != NULL) {
+        if (atual->dadosUser.numeroEstudante == numeroEstudante) {
+            printf("Nome: %s\n", atual->dadosUser.nome);
+            printf("Número do Estudante: %d\n", atual->dadosUser.numeroEstudante);
+            printf("Sala: %d\n", atual->dadosUser.sala);
+            printf("Curso: %s\n", atual->dadosUser.curso);
+            printf("Idade: %d\n", atual->dadosUser.idade);
+            printf("Ano: %d\n", atual->dadosUser.ano);
+            printf("Senha: %s\n", atual->dadosUser.senha);
+            printf("Número de Telefone: %s\n", atual->dadosUser.numeroTelefone);
+            return 1;
+        }
+        atual = atual->next;
+    }
+    return 0;
+}
+
+
+
+void visualizarCarteiras(struct CarteiraDigital carteiraDigital) {
+    printf("Carteiras Digitais:\n");
+    for (int i = 0; i < carteiraDigital.qtd; i++) {
+        printf("Carteira %d:\n", i + 1);
+        printf("Saldo: %.2f\n", carteiraDigital.dadosCarteira[i].saldo);
+        printf("Código: %s\n", carteiraDigital.dadosCarteira[i].codigoCarteira);
+        printf("Número de Estudante: %d\n", carteiraDigital.dadosCarteira[i].numeroEstudante);
+        printf("\n");
+    }
+}
 #endif

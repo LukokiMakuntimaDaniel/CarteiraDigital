@@ -60,9 +60,9 @@ struct NOLDLHT {
 struct NOLDLU* criarNoUser(struct DadosUser dadosUser);
 struct NOLDLHT* criarNoHT(struct dadosHistoricoTrasacao dadosTrasacao);
 struct NOLDLC* criarNOC(struct dadosConta dados);
-int cadastrarConta(struct NOLDLC** cabeca, struct dadosConta dados);
-int CadastrarUtilizador(struct NOLDLU** cabeca, struct DadosUser dadosUser);
-int cadastrarTrasacao(struct NOLDLHT** cabeca, struct dadosHistoricoTrasacao dados);
+int cadastrarConta(struct NOLDLC* cabeca, struct dadosConta dados);
+int CadastrarUtilizador(struct NOLDLU* cabeca, struct DadosUser dadosUser);
+int cadastrarTrasacao(struct NOLDLHT* cabeca, struct dadosHistoricoTrasacao dados);
 int cadastrarCarteira(struct CarteiraDigital* carteira, struct DadosCarteira dados);
 int cadastrarUsuarioEGravarArquivo(struct DadosUser dadosUser);
 int cadastrarCarteiraEGravarArquivo(double saldo, const char* codigoCarteira, int numeroEstudante);
@@ -72,4 +72,6 @@ char * login(struct NOLDLU * lista , int numero, char* senha);
 char* pegarMeuNome(struct NOLDLU* head, char* numeroTelefone);
 void removerNovaLinha(char *str);
 int contarDadosDeConta(struct NOLDLC* inicio);
+int listarDadosPorNumeroEstudante(struct NOLDLU* inicio, int numeroEstudante);
+void visualizarCarteiras(struct CarteiraDigital carteiraDigital);
 #endif // ESTRUTURAS_H_INCLUDED

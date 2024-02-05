@@ -74,7 +74,7 @@ int main()
                                                 printf("\nPressione Enter para continuar...\n");
                                                 getchar();
                                             }else{
-                                                printf("houve algum erro ou estudante não encontrado\n");
+                                                printf("\Nhouve algum erro ou estudante não encontrado\n");
                                                 printf("\nPressione Enter para continuar...\n");
                                                 getchar();
                                             }
@@ -95,9 +95,9 @@ int main()
                                             }
                                             break;
                                         case 3:
-                                            printf("Quantidade de Contas");
+                                            printf("\nQuantidade de Contas\n");
                                             printf("-------------------------------------------------------------");
-                                            printf("Na Nossa base de dados existe %d "+contarDadosDeConta(&contas));
+                                            printf("\n Na Nossa base de dados existe %d "+contarDadosDeConta(&contas));
                                             printf("-------------------------------------------------------------");
                                             printf("\nPressione Enter para continuar...\n");
                                             getchar();
@@ -105,7 +105,7 @@ int main()
                                         case 4:
                                             getchar();
                                             saldo=10000;
-                                            printf("CRIAÇÃO DE CONTA\n");
+                                            printf("\nCRIAÇÃO DE CONTA\n");
                                             printf("Digite o numero de telefone do Estudante\n");
                                             fgets(telefone, sizeof(telefone), stdin);
                                             removerNovaLinha(telefone);
@@ -126,12 +126,24 @@ int main()
                                                 printf("\nPressione Enter para continuar...\n");
                                                 getchar();
                                             }
-
-
                                             break;
                                          case 5:
+                                             printf("\nDigite o numero do estudante: ");
+                                             scanf("%d",&numero);
+                                             if(listarDadosPorNumeroEstudante(&utilizadores,numero)){
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                             }else{
+                                                printf("\nUtilizador nao encontrado\n");
+                                                printf("\nPressione Enter para continuar...\n");
+                                                getchar();
+                                             }
                                             break;
                                          case 6:
+                                             printf("\nVisualizar todas as carteiras\n");
+                                             visualizarCarteiras(carteiras);
+                                             printf("\nPressione Enter para continuar...\n");
+                                             getchar();
                                             break;
                                     }
 
