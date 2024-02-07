@@ -42,7 +42,8 @@ struct dadosHistoricoTrasacao{
     int mes;
     int tipoTrazacao;
     int saldo;
-    char codigoCarteira[50];
+    char codigoCarteiraOrigem[50];
+    char codigoCarteiraDestino[50];
 };
 
 struct NOLDLC {
@@ -60,6 +61,7 @@ struct NOLDLHT {
 struct NOLDLU* criarNoUser(struct DadosUser dadosUser);
 struct NOLDLHT* criarNoHT(struct dadosHistoricoTrasacao dadosTrasacao);
 struct NOLDLC* criarNOC(struct dadosConta dados);
+
 int cadastrarConta(struct NOLDLC* cabeca, struct dadosConta dados);
 int CadastrarUtilizador(struct NOLDLU* cabeca, struct DadosUser dadosUser);
 int cadastrarTrasacao(struct NOLDLHT* cabeca, struct dadosHistoricoTrasacao dados);
@@ -74,4 +76,6 @@ void removerNovaLinha(char *str);
 int contarDadosDeConta(struct NOLDLC* inicio);
 int listarDadosPorNumeroEstudante(struct NOLDLU* inicio, int numeroEstudante);
 void visualizarCarteiras(struct CarteiraDigital carteiraDigital);
+int transferirSaldo(struct CarteiraDigital *carteira, int origem, int destino, double valor, struct NOLDLHT* cabeca);
+int levantamentoSaldo(struct CarteiraDigital *carteira, double saldo, int numeroEstudante, struct NOLDLHT** cabeca);
 #endif // ESTRUTURAS_H_INCLUDED

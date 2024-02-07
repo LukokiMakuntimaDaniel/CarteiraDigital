@@ -1,9 +1,11 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "estruturas.h"
+
 
 
 struct NOLDLU * criarNoUser(struct DadosUser dadosUser) {
@@ -76,7 +78,7 @@ int CadastrarUtilizador(struct NOLDLU* cabeca, struct DadosUser dadosUser) {
     if (cabeca == NULL) {
         cabeca = novoNo;
     } else {
-        struct NOLDLU* temp = cabeca;
+        struct NOLDLU * temp = cabeca;
         while (temp->next != NULL) {
             temp = temp->next;
         }
@@ -175,7 +177,7 @@ int cadastrarContaEGravarArquivo(struct dadosConta dadosConta) {
 int cadastrarTransacaoEGravarArquivo(struct dadosHistoricoTrasacao dadosTransacao) {
     FILE *arquivoTransacao = fopen("transacoes.txt", "a");
     if (arquivoTransacao != NULL) {
-        fprintf(arquivoTransacao, "%d,%d,%d,%d,%d,%d,%s\n",dadosTransacao.ano, dadosTransacao.dia, dadosTransacao.mes,dadosTransacao.ano, dadosTransacao.tipoTrazacao,dadosTransacao.saldo, dadosTransacao.codigoCarteira);
+        fprintf(arquivoTransacao, "%d,%d,%d,%d,%d,%d,%s\n",dadosTransacao.ano, dadosTransacao.dia, dadosTransacao.mes,dadosTransacao.ano, dadosTransacao.tipoTrazacao,dadosTransacao.saldo, dadosTransacao.codigoCarteiraOrigem,dadosTransacao.codigoCarteiraDestino);
         fclose(arquivoTransacao);
         return 1;
     } else {
@@ -270,5 +272,80 @@ void visualizarCarteiras(struct CarteiraDigital carteiraDigital) {
         printf("Número de Estudante: %d\n", carteiraDigital.dadosCarteira[i].numeroEstudante);
         printf("\n");
     }
+}
+
+int transferirSaldo(struct CarteiraDigital *carteira, int origem, int destino, double valor, struct NOLDLHT* cabeca) {
+    int i, indiceOrigem = -1, indiceDestino = -1;
+
+    for (i = 0; i < carteira->qtd; i++) {
+        if (carteira->dadosCarteira[i].numeroEstudante == origem){
+            printf("\n%f\n",carteira->dadosCarteira[i].saldo);
+            indiceOrigem = i;
+        }else if (carteira->dadosCarteira[i].numeroEstudante == destino){
+            indiceDestino = i;
+        }
+    }
+
+    if (indiceOrigem != -1 && indiceDestino != -1) {
+        if (carteira->dadosCarteira[indiceOrigem].saldo >= valor) {
+            carteira->dadosCarteira[indiceOrigem].saldo -= valor;
+            carteira->dadosCarteira[indiceDestino].saldo += valor;
+
+            time_t t = time(NULL);
+            struct tm tm = *localtime(&t);
+            struct dadosHistoricoTrasacao dadosTransacao;
+            dadosTransacao.ano = tm.tm_year + 1900;
+            dadosTransacao.dia = tm.tm_mday;
+            dadosTransacao.mes = tm.tm_mon + 1;
+            dadosTransacao.tipoTrazacao = 1;
+            dadosTransacao.saldo = valor;
+            strcpy(dadosTransacao.codigoCarteiraOrigem, carteira->dadosCarteira[indiceOrigem].codigoCarteira);
+            strcpy(dadosTransacao.codigoCarteiraDestino, carteira->dadosCarteira[indiceDestino].codigoCarteira);
+            cadastrarTransacaoEGravarArquivo(dadosTransacao);
+            cadastrarTrasacao(cabeca, dadosTransacao);
+
+        } else {
+            printf("Saldo insuficiente na carteira %d.\n", origem);
+            return 0;
+        }
+    } else {
+        printf("Carteira de origem ou destino nao encontrada.\n");
+        return 0;
+    }
+    return 1;
+}
+
+
+int levantamentoSaldo(struct CarteiraDigital *carteira, double saldo, int numeroEstudante, struct NOLDLHT** cabeca) {
+    int i;
+
+    // Procura a carteira com o número do estudante fornecido
+    for (i = 0; i < carteira->qtd; i++) {
+        if (carteira->dadosCarteira[i].numeroEstudante == numeroEstudante) {
+            // Verifica se o saldo a ser retirado não excede o saldo disponível na carteira
+            if (carteira->dadosCarteira[i].saldo <= saldo) {
+                carteira->dadosCarteira[i].saldo -= saldo; // Reduz o saldo da carteira após o levantamento
+                break; // Sai do loop após encontrar a carteira
+            }else{
+                return 0;
+            }
+        }
+    }
+        // Obter a data atual do sistema
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+
+        // Criar e cadastrar a transação de levantamento de saldo com o código da carteira como origem e destino
+        struct dadosHistoricoTrasacao dadosTransacao;
+        dadosTransacao.ano = tm.tm_year + 1900; // Adiciona 1900 ao ano
+        dadosTransacao.dia = tm.tm_mday; // Dia do mês
+        dadosTransacao.mes = tm.tm_mon + 1; // Mês (0-11), por isso é necessário adicionar 1
+        dadosTransacao.tipoTrazacao = 2; // Tipo de transação para levantamento de saldo
+        dadosTransacao.saldo = saldo;
+        strcpy(dadosTransacao.codigoCarteiraOrigem, carteira->dadosCarteira[i].codigoCarteira); // Código da carteira como origem
+        strcpy(dadosTransacao.codigoCarteiraDestino, carteira->dadosCarteira[i].codigoCarteira); // Código da carteira como destino
+        cadastrarTransacaoEGravarArquivo(dadosTransacao);
+        cadastrarTrasacao(cabeca, dadosTransacao); // Chama a função para cadastrar a transação
+        return 1;
 }
 #endif

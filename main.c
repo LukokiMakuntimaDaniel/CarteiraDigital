@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
 #include "funcoes.h"
 #include "estruturas.h"
 
 struct NOLDLU *utilizadores = NULL;
 struct NOLDLC * contas = NULL;
 struct CarteiraDigital carteiras;
+struct NOLDLHT *transacao=NULL;
 
 
 
-int opcao,opcao1,opcao2,numero,opcao3,opcao4;
+int opcao,opcao1,opcao2,numero,opcao3,opcao4,numeroDestino;
 char *numeroTelefone,senha[50],telefone[50],codigoCarteira[50]="LW";
 
 double saldo=10000;
@@ -64,10 +64,10 @@ int main()
                                     scanf("%d",&opcao4);
                                     system("cls");
                                     switch (opcao4){
-                                        case 1:
+                                        case 2:
                                             printf("\nDigite o numero do estudante\n");
                                             scanf("%d",&numero);
-                                            printf("Digite o numero do estudante\n");
+                                            printf("Digite o saldo a depositar\n");
                                             scanf("%lf",&saldo);
                                             if(levantamneto(&carteiras,numero,saldo)){
                                                 printf("O valor vou depositado com sucesso\n");
@@ -79,7 +79,7 @@ int main()
                                                 getchar();
                                             }
                                             break;
-                                        case 2:
+                                        case 1:
                                             printf("\nDigite o numero do estudante\n");
                                             scanf("%d",&numero);
                                             printf("Digite o numero do estudante\n");
@@ -209,10 +209,9 @@ int main()
                     do{
                         printf("Usuario: %s ",(pegarMeuNome(&utilizadores,numeroTelefone)));
                         printf("----------------------------------------------------\n");
-                        printf("1: Efectuar a Transferencia\n");
+                        printf("1: Efectuar a Transferencia de valores\n");
                         printf("2: Consultar o Saldo \n");
                         printf("3: Levantamento do Saldo \n");
-                        printf("4: Efectuar o Pagamento \n");
                         printf("5: Visualizar o Historico \n");
                         printf("0- SAIR \n");
                         printf("----------------------------------------------------\n");
@@ -221,18 +220,37 @@ int main()
                         system("cls");
                         switch (opcao3){
                             case 1:
+                                printf("\nTransferencia de valores\n");
+                                printf("Digite o numero de Destino do Estudante\n");
+                                scanf("%d",&numeroDestino);
+                                printf("Digite o valor a transferir\n");
+                                scanf("%lf",&saldo);
+                                if(transferirSaldo(&carteiras,numero,numeroDestino,saldo,&transacao)){
+                                     printf("\nTransferencia de %.2f realizada com sucesso da carteira %d para %d.\n", saldo, numero, numeroDestino);
+                                     printf("\nPressione Enter para continuar...\n");
+                                     getchar();
+                                }else{
+                                    printf("\nPressione Enter para continuar...\n");
+                                    getchar();
+                                }
                                 break;
-
                             case 2:
+                                 printf("Digite o valor a transferir\n");
+                                 scanf("%lf",&saldo);
+                                if(levantamentoSaldo(&carteiras,saldo,numero,&transacao){
+
+                                }else{
+                                    printf("\nocorreu um erro valor insuficiente\n");
+                                    printf("\nPressione Enter para continuar...\n");
+                                    getchar();
+                                }
+
                                 break;
 
                             case 3:
                                 break;
 
                             case 4:
-                                break;
-
-                            case 5:
                                 break;
                         }
                     }while(opcao3!=0);
