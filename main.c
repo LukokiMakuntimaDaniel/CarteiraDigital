@@ -3,13 +3,15 @@
 #include "funcoes.h"
 #include "estruturas.h"
 
+
+//criacao das listas
 struct NOLDLU *utilizadores = NULL;
 struct NOLDLC * contas = NULL;
 struct CarteiraDigital carteiras;
 struct NOLDLHT *transacao=NULL;
 
 
-
+//variaveis auxiliares
 int opcao,opcao1,opcao2,numero,opcao3,opcao4,numeroDestino;
 char *numeroTelefone,senha[50],telefone[50],codigoCarteira[50]="LW";
 
@@ -17,6 +19,7 @@ double saldo=10000;
 struct DadosUser novoUsuario;
 struct dadosConta novaConta;
 struct DadosCarteira novaCarteira;
+
 
 int main()
 {
@@ -67,7 +70,7 @@ int main()
                                         case 2:
                                             printf("\nDigite o numero do estudante\n");
                                             scanf("%d",&numero);
-                                            printf("Digite o saldo a depositar\n");
+                                            printf("Digite o saldo a levantar\n");
                                             scanf("%lf",&saldo);
                                             if(levantamneto(&carteiras,numero,saldo)){
                                                 printf("O valor vou depositado com sucesso\n");
@@ -82,7 +85,7 @@ int main()
                                         case 1:
                                             printf("\nDigite o numero do estudante\n");
                                             scanf("%d",&numero);
-                                            printf("Digite o numero do estudante\n");
+                                            printf("Digite o saldo a depositar\n");
                                             scanf("%lf",&saldo);
                                             if(depositar(&carteiras,numero,saldo)){
                                                 printf("Operacao de levantamento feito com sucesso\n");
@@ -234,11 +237,13 @@ int main()
                                     getchar();
                                 }
                                 break;
-                            case 2:
+                            case 3:
                                  printf("Digite o valor a transferir\n");
                                  scanf("%lf",&saldo);
-                                if(levantamentoSaldo(&carteiras,saldo,numero,&transacao){
-
+                                if(levantamentoSaldo(&carteiras,saldo,numero,&transacao)){
+                                    printf("\ndeposito feito com sucesso\n");
+                                    printf("\nPressione Enter para continuar...\n");
+                                    getchar();
                                 }else{
                                     printf("\nocorreu um erro valor insuficiente\n");
                                     printf("\nPressione Enter para continuar...\n");
@@ -247,10 +252,15 @@ int main()
 
                                 break;
 
-                            case 3:
+                            case 2:
+                                printf("\n o seu saldo é %f kz \n",obterSaldo(&carteiras,numero));
+                                printf("\nPressione Enter para continuar...\n");
+                                getchar();
                                 break;
 
                             case 4:
+                                printf("\nSuas transacoes\n");
+                                if(mostrarTransacoesPorCarteiraOrigem(transacao,obterCodigoCarteiraPorEstudante(&carteiras,numero)))
                                 break;
                         }
                     }while(opcao3!=0);

@@ -21,3 +21,5 @@ LW12,Poupanca
 LW1,Poupanca
 LW1,Poupanca
 LW12,Poupanca
+LW12,Poupanca
+LW1255,Poupanca

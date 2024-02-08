@@ -7,7 +7,7 @@
 #include "estruturas.h"
 
 
-
+//criar no do user recebendo todos os dados do user
 struct NOLDLU * criarNoUser(struct DadosUser dadosUser) {
     struct NOLDLU* novoNo = (struct NOLDLU*)malloc(sizeof(struct NOLDLU));
     if (novoNo == NULL) {
@@ -21,6 +21,7 @@ struct NOLDLU * criarNoUser(struct DadosUser dadosUser) {
 }
 
 
+//criar no da transacao recebendo os dados da tranzacao
 struct NOLDLHT* criarNoHT(struct dadosHistoricoTrasacao dadosTrasacao) {
 
     struct NOLDLHT* novoNo = (struct NOLDLHT*)malloc(sizeof(struct NOLDLHT));
@@ -195,6 +196,7 @@ char * login(struct NOLDLU * lista , int numero , char *senha){
         return NULL;
 }
 
+
 char* pegarMeuNome(struct NOLDLU* head, char* numeroTelefone) {
     struct NOLDLU* current = head;
     while (current != NULL) {
@@ -274,6 +276,7 @@ void visualizarCarteiras(struct CarteiraDigital carteiraDigital) {
     }
 }
 
+
 int transferirSaldo(struct CarteiraDigital *carteira, int origem, int destino, double valor, struct NOLDLHT* cabeca) {
     int i, indiceOrigem = -1, indiceDestino = -1;
 
@@ -318,7 +321,6 @@ int transferirSaldo(struct CarteiraDigital *carteira, int origem, int destino, d
 
 int levantamentoSaldo(struct CarteiraDigital *carteira, double saldo, int numeroEstudante, struct NOLDLHT** cabeca) {
     int i;
-
     // Procura a carteira com o número do estudante fornecido
     for (i = 0; i < carteira->qtd; i++) {
         if (carteira->dadosCarteira[i].numeroEstudante == numeroEstudante) {
@@ -347,5 +349,66 @@ int levantamentoSaldo(struct CarteiraDigital *carteira, double saldo, int numero
         cadastrarTransacaoEGravarArquivo(dadosTransacao);
         cadastrarTrasacao(cabeca, dadosTransacao); // Chama a função para cadastrar a transação
         return 1;
+}
+
+
+double obterSaldo(struct CarteiraDigital *carteira, int numeroEstudante) {
+    double saldo = 0.0;
+    int i;
+
+    // Procura a carteira com o número do estudante fornecido
+    for (i = 0; i < carteira->qtd; i++) {
+        if (carteira->dadosCarteira[i].numeroEstudante == numeroEstudante) {
+            saldo = carteira->dadosCarteira[i].saldo;
+            break; // Sai do loop após encontrar a carteira
+        }
+    }
+
+    return saldo;
+}
+
+
+char* obterCodigoCarteiraPorEstudante(struct CarteiraDigital *carteira, int numeroEstudante) {
+    char* codigoCarteira = NULL;
+    int i;
+
+    // Procura a carteira com o número do estudante fornecido
+    for (i = 0; i < carteira->qtd; i++) {
+        if (carteira->dadosCarteira[i].numeroEstudante == numeroEstudante) {
+            codigoCarteira = carteira->dadosCarteira[i].codigoCarteira;
+            break; // Sai do loop após encontrar a carteira
+        }
+    }
+
+    return codigoCarteira;
+}
+
+
+void mostrarTransacoesPorCarteiraOrigem(struct NOLDLHT *cabecaTransacoes, char *codigoCarteiraOrigem) {
+    struct NOLDLHT *atual = cabecaTransacoes;
+    int saber=0;
+
+    printf("Transações da carteira de origem %s:\n", codigoCarteiraOrigem);
+
+    // Percorre a lista de transações
+    while (atual != NULL) {
+        // Verifica se a transação corresponde ao código da carteira de origem fornecido
+        if (strcmp(atual->dadosHT.codigoCarteiraOrigem, codigoCarteiraOrigem) == 0) {
+            // Imprime os detalhes da transação
+            printf("Ano: %d\n", atual->dadosHT.ano);
+            printf("Mês: %d\n", atual->dadosHT.mes);
+            printf("Dia: %d\n", atual->dadosHT.dia);
+            printf("Tipo de transação: %d\n", atual->dadosHT.tipoTransacao);
+            printf("Saldo: %d\n", atual->dadosHT.saldo);
+            printf("Código da carteira de origem: %s\n", atual->dadosHT.codigoCarteiraOrigem);
+            printf("Código da carteira de destino: %s\n", atual->dadosHT.codigoCarteiraDestino);
+            // Aqui você pode imprimir outras informações da transação, se disponível
+            printf("\n");
+            saber++;
+        }
+        // Avança para o próximo nó na lista
+        atual = atual->next;
+    }
+    return saber;
 }
 #endif
