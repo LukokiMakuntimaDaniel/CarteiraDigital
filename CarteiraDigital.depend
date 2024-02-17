@@ -1,16 +1,21 @@
 # depslib dependency file v1.0
-1707335928 source:d:\carteiradigital\main.c
+1708158183 source:d:\carteiradigital\main.c
 	<stdio.h>
 	<stdlib.h>
 	"funcoes.h"
 	"estruturas.h"
+	"menu.h"
 
-1707330157 d:\carteiradigital\estruturas.h
+1707391902 d:\carteiradigital\estruturas.h
 
-1707336611 d:\carteiradigital\funcoes.h
+1708157878 d:\carteiradigital\funcoes.h
 	<time.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"estruturas.h"
+
+1708158282 d:\carteiradigital\menu.h
+	<stdio.h>
+	<stdlib.h>
 
