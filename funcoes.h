@@ -385,7 +385,7 @@ char* obterCodigoCarteiraPorEstudante(struct CarteiraDigital *carteira, int nume
 
 
 void mostrarTransacoesPorCarteiraOrigem(struct NOLDLHT *cabecaTransacoes, char *codigoCarteiraOrigem) {
-    struct NOLDLHT *atual = cabecaTransacoes;
+   /* struct NOLDLHT *atual = cabecaTransacoes;
     int saber=0;
 
     printf("Transações da carteira de origem %s:\n", codigoCarteiraOrigem);
@@ -409,6 +409,6 @@ void mostrarTransacoesPorCarteiraOrigem(struct NOLDLHT *cabecaTransacoes, char *
         // Avança para o próximo nó na lista
         atual = atual->next;
     }
-    return saber;
+    return saber;*/
 }
 #endif

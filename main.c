@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "funcoes.h"
 #include "estruturas.h"
-
+#include "menu.h"
 
 //criacao das listas
 struct NOLDLU *utilizadores = NULL;
@@ -24,21 +24,13 @@ struct DadosCarteira novaCarteira;
 int main()
 {
     do{
-        printf("----------------------------------------------------\n");
-        printf("1- SISTEMA \n");
-        printf("2- CARTEIRA DIGITAL \n");
-        printf("0- SAIR \n");
-        printf("----------------------------------------------------\n");
-        printf("escolha uma opção: \n");
+        menuprincipal();
         scanf("%d",&opcao);
         system("cls");
         switch (opcao){
             case 1:
                 do{
-                    printf("----------------------------------------------------\n");
-                    printf("1: LOGAR NO LombongoPay COMO GESTOR\n");
-                    printf("2: CADASTRAR O UTILIZADOR DA CARTEIRA DIGITAL ESTUDANTE\n");
-                    printf("0- SAIR \n");
+                    menusistema();
                     printf("----------------------------------------------------\n");
                     printf("escolha uma opção: \n");
                     scanf("%d",&opcao1);
@@ -53,17 +45,7 @@ int main()
                             printf("processando.....");
                             if(numero==2024 && strcmp(senha,"UAN")==0){
                                 do{
-                                    printf("\nBEM VINDO GESTOR\n");
-                                    printf("----------------------------------------------------\n");
-                                    printf("1: Depositar saldo\n");
-                                    printf("2: Levantar Saldo\n");
-                                    printf("3: Consultar a Quantidade de Contas\n");
-                                    printf("4: Criar Conta\n");
-                                    printf("5: Visualizar Utilizadores\n");
-                                    printf("6: Visualizar Todas as Carteiras\n");
-                                    printf("0- SAIR \n");
-                                    printf("----------------------------------------------------\n");
-                                    printf("escolha uma opção: \n");
+                                    menuGestor();
                                     scanf("%d",&opcao4);
                                     system("cls");
                                     switch (opcao4){
@@ -211,14 +193,7 @@ int main()
                         system("cls");
                     do{
                         printf("Usuario: %s ",(pegarMeuNome(&utilizadores,numeroTelefone)));
-                        printf("----------------------------------------------------\n");
-                        printf("1: Efectuar a Transferencia de valores\n");
-                        printf("2: Consultar o Saldo \n");
-                        printf("3: Levantamento do Saldo \n");
-                        printf("5: Visualizar o Historico \n");
-                        printf("0- SAIR \n");
-                        printf("----------------------------------------------------\n");
-                        printf("escolha uma opção: \n");
+
                         scanf("%d",&opcao3);
                         system("cls");
                         switch (opcao3){
@@ -260,7 +235,7 @@ int main()
 
                             case 4:
                                 printf("\nSuas transacoes\n");
-                                if(mostrarTransacoesPorCarteiraOrigem(transacao,obterCodigoCarteiraPorEstudante(&carteiras,numero)))
+                               // if(mostrarTransacoesPorCarteiraOrigem(transacao,obterCodigoCarteiraPorEstudante(&carteiras,numero)))
                                 break;
                         }
                     }while(opcao3!=0);
